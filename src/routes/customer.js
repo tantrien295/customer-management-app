@@ -1,3 +1,8 @@
+
+const express = require('express');
+const router = express.Router();
+const customerController = require('../controllers/customerController');
+const pool = require('../models/db');
 // Endpoint: /api/customers/migrate-note-column
 router.post('/migrate-note-column', async (req, res) => {
   try {
@@ -7,9 +12,6 @@ router.post('/migrate-note-column', async (req, res) => {
     res.status(500).json({ success: false, error: err.message, stack: err.stack });
   }
 });
-const express = require('express');
-const router = express.Router();
-const customerController = require('../controllers/customerController');
 
 router.get('/', customerController.getAll);
 router.get('/:id', customerController.getById);
