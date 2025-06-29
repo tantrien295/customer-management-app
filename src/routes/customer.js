@@ -1,3 +1,12 @@
+// Endpoint: /api/customers/migrate-note-column
+router.post('/migrate-note-column', async (req, res) => {
+  try {
+    await pool.query("ALTER TABLE customers ADD COLUMN IF NOT EXISTS note TEXT;");
+    res.json({ success: true, message: 'Đã thêm cột note (nếu chưa có).' });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message, stack: err.stack });
+  }
+});
 const express = require('express');
 const router = express.Router();
 const customerController = require('../controllers/customerController');
