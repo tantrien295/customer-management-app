@@ -8,4 +8,16 @@ router.post('/', customerController.create);
 router.put('/:id', customerController.update);
 router.delete('/:id', customerController.delete);
 
+
+// Endpoint: /api/customers/migrate-birthday-column
+const pool = require('../models/db');
+router.post('/migrate-birthday-column', async (req, res) => {
+  try {
+    await pool.query("ALTER TABLE customers ADD COLUMN IF NOT EXISTS birthday DATE;");
+    res.json({ success: true, message: 'Đã thêm cột birthday (nếu chưa có).' });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
 module.exports = router;
