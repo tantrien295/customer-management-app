@@ -10,7 +10,7 @@ const Staff = {
     return res.rows[0];
   },
   async create(data) {
-    const { name, phone, note } = data;
+    const { name, phone = null, note } = data;
     const res = await pool.query(
       'INSERT INTO staff (name, phone, note) VALUES ($1, $2, $3) RETURNING *',
       [name, phone, note]

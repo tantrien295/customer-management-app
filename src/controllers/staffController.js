@@ -11,8 +11,8 @@ const staffController = {
     res.json(data);
   },
   async create(req, res) {
-    const { name, phone } = req.body;
-    if (!name || !phone) return res.status(400).json({ error: 'Name and phone are required' });
+    const { name } = req.body;
+    if (!name) return res.status(400).json({ error: 'Name is required' });
     const data = await Staff.create(req.body);
     res.status(201).json(data);
   },
