@@ -1,4 +1,8 @@
+
+const express = require('express');
+const router = express.Router();
 const pool = require('../models/db');
+const serviceController = require('../controllers/serviceController');
 
 // Endpoint: /api/services/migrate-drop-unused-columns
 router.post('/migrate-drop-unused-columns', async (req, res) => {
@@ -10,9 +14,6 @@ router.post('/migrate-drop-unused-columns', async (req, res) => {
     res.status(500).json({ success: false, error: err.message, stack: err.stack });
   }
 });
-const express = require('express');
-const router = express.Router();
-const serviceController = require('../controllers/serviceController');
 
 router.get('/', serviceController.getAll);
 router.get('/:id', serviceController.getById);
