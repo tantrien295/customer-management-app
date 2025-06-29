@@ -12,13 +12,42 @@ const customerController = {
   },
   async create(req, res) {
     // Validate
-    const { name, phone } = req.body;
+    const { name, phone, birthday } = req.body;
     if (!name || !phone) return res.status(400).json({ error: 'Name and phone are required' });
-    const data = await Customer.create(req.body);
+
+    // Xử lý birthday: chuyển "dd-mm-yyyy" hoặc "dd-mm-1900" thành "yyyy-mm-dd" hoặc null
+    let birthdayISO = null;
+    if (birthday && typeof birthday === 'string') {
+      const parts = birthday.split('-');
+      if (parts.length === 3) {
+        const [dd, mm, yyyy] = parts;
+        if (yyyy !== '1900') {
+          // Kiểm tra hợp lệ
+          if (!isNaN(dd) && !isNaN(mm) && !isNaN(yyyy)) {
+            birthdayISO = `${yyyy.padStart(4, '0')}-${mm.padStart(2, '0')}-${dd.padStart(2, '0')}`;
+          }
+        }
+      }
+    }
+    const data = await Customer.create({ ...req.body, birthday: birthdayISO });
     res.status(201).json(data);
   },
   async update(req, res) {
-    const data = await Customer.update(req.params.id, req.body);
+    // Xử lý birthday tương tự khi update
+    let { birthday } = req.body;
+    let birthdayISO = null;
+    if (birthday && typeof birthday === 'string') {
+      const parts = birthday.split('-');
+      if (parts.length === 3) {
+        const [dd, mm, yyyy] = parts;
+        if (yyyy !== '1900') {
+          if (!isNaN(dd) && !isNaN(mm) && !isNaN(yyyy)) {
+            birthdayISO = `${yyyy.padStart(4, '0')}-${mm.padStart(2, '0')}-${dd.padStart(2, '0')}`;
+          }
+        }
+      }
+    }
+    const data = await Customer.update(req.params.id, { ...req.body, birthday: birthdayISO });
     res.json(data);
   },
   async delete(req, res) {
