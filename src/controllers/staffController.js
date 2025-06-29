@@ -13,11 +13,15 @@ const staffController = {
   async create(req, res) {
     const { name } = req.body;
     if (!name) return res.status(400).json({ error: 'Name is required' });
-    const data = await Staff.create(req.body);
+    // Chỉ lấy các trường name, phone, birthday, address
+    const { phone = null, birthday = null, address = null } = req.body;
+    const data = await Staff.create({ name, phone, birthday, address });
     res.status(201).json(data);
   },
   async update(req, res) {
-    const data = await Staff.update(req.params.id, req.body);
+    // Chỉ lấy các trường name, phone, birthday, address
+    const { name, phone = null, birthday = null, address = null } = req.body;
+    const data = await Staff.update(req.params.id, { name, phone, birthday, address });
     res.json(data);
   },
   async delete(req, res) {

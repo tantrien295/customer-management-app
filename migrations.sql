@@ -22,7 +22,8 @@ CREATE TABLE IF NOT EXISTS staff (
   id SERIAL PRIMARY KEY,
   name VARCHAR(100) NOT NULL,
   phone VARCHAR(20),
-  note TEXT,
+  birthday DATE,
+  address TEXT,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

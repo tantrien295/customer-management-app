@@ -10,18 +10,18 @@ const Staff = {
     return res.rows[0];
   },
   async create(data) {
-    const { name, phone = null, note } = data;
+    const { name, phone = null, birthday = null, address = null } = data;
     const res = await pool.query(
-      'INSERT INTO staff (name, phone, note) VALUES ($1, $2, $3) RETURNING *',
-      [name, phone, note]
+      'INSERT INTO staff (name, phone, birthday, address) VALUES ($1, $2, $3, $4) RETURNING *',
+      [name, phone, birthday, address]
     );
     return res.rows[0];
   },
   async update(id, data) {
-    const { name, phone, note } = data;
+    const { name, phone = null, birthday = null, address = null } = data;
     const res = await pool.query(
-      'UPDATE staff SET name=$1, phone=$2, note=$3 WHERE id=$4 RETURNING *',
-      [name, phone, note, id]
+      'UPDATE staff SET name=$1, phone=$2, birthday=$3, address=$4 WHERE id=$5 RETURNING *',
+      [name, phone, birthday, address, id]
     );
     return res.rows[0];
   },
