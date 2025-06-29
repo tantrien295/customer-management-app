@@ -10,7 +10,8 @@ const Staff = {
     return res.rows[0];
   },
   async create(data) {
-    const { name, phone = null, birthday = null, address = null } = data;
+    let { name, phone = null, birthday = null, address = null } = data;
+    if (birthday === "") birthday = null;
     const res = await pool.query(
       'INSERT INTO staff (name, phone, birthday, address) VALUES ($1, $2, $3, $4) RETURNING *',
       [name, phone, birthday, address]
@@ -18,7 +19,8 @@ const Staff = {
     return res.rows[0];
   },
   async update(id, data) {
-    const { name, phone = null, birthday = null, address = null } = data;
+    let { name, phone = null, birthday = null, address = null } = data;
+    if (birthday === "") birthday = null;
     const res = await pool.query(
       'UPDATE staff SET name=$1, phone=$2, birthday=$3, address=$4 WHERE id=$5 RETURNING *',
       [name, phone, birthday, address, id]

@@ -14,13 +14,16 @@ const staffController = {
     const { name } = req.body;
     if (!name) return res.status(400).json({ error: 'Name is required' });
     // Chỉ lấy các trường name, phone, birthday, address
-    const { phone = null, birthday = null, address = null } = req.body;
+    let { phone = null, birthday = null, address = null } = req.body;
+    // Nếu birthday là chuỗi rỗng thì chuyển thành null
+    if (birthday === "") birthday = null;
     const data = await Staff.create({ name, phone, birthday, address });
     res.status(201).json(data);
   },
   async update(req, res) {
     // Chỉ lấy các trường name, phone, birthday, address
-    const { name, phone = null, birthday = null, address = null } = req.body;
+    let { name, phone = null, birthday = null, address = null } = req.body;
+    if (birthday === "") birthday = null;
     const data = await Staff.update(req.params.id, { name, phone, birthday, address });
     res.json(data);
   },
