@@ -15,17 +15,15 @@ const customerController = {
     const { name, phone, birthday } = req.body;
     if (!name || !phone) return res.status(400).json({ error: 'Name and phone are required' });
 
-    // Xử lý birthday: chuyển "dd-mm-yyyy" hoặc "dd-mm-1900" thành "yyyy-mm-dd" hoặc null
+    // Xử lý birthday: chuyển "dd-mm-yyyy" hoặc "dd-mm" thành "yyyy-mm-dd" hoặc null
     let birthdayISO = null;
     if (birthday && typeof birthday === 'string') {
       const parts = birthday.split('-');
       if (parts.length === 3) {
-        const [dd, mm, yyyy] = parts;
-        if (yyyy !== '1900') {
-          // Kiểm tra hợp lệ
-          if (!isNaN(dd) && !isNaN(mm) && !isNaN(yyyy)) {
-            birthdayISO = `${yyyy.padStart(4, '0')}-${mm.padStart(2, '0')}-${dd.padStart(2, '0')}`;
-          }
+        let [dd, mm, yyyy] = parts;
+        if (!yyyy || yyyy === '' || yyyy === undefined) yyyy = '1900';
+        if (!isNaN(dd) && !isNaN(mm) && !isNaN(yyyy)) {
+          birthdayISO = `${yyyy.padStart(4, '0')}-${mm.padStart(2, '0')}-${dd.padStart(2, '0')}`;
         }
       }
     }
@@ -39,11 +37,10 @@ const customerController = {
     if (birthday && typeof birthday === 'string') {
       const parts = birthday.split('-');
       if (parts.length === 3) {
-        const [dd, mm, yyyy] = parts;
-        if (yyyy !== '1900') {
-          if (!isNaN(dd) && !isNaN(mm) && !isNaN(yyyy)) {
-            birthdayISO = `${yyyy.padStart(4, '0')}-${mm.padStart(2, '0')}-${dd.padStart(2, '0')}`;
-          }
+        let [dd, mm, yyyy] = parts;
+        if (!yyyy || yyyy === '' || yyyy === undefined) yyyy = '1900';
+        if (!isNaN(dd) && !isNaN(mm) && !isNaN(yyyy)) {
+          birthdayISO = `${yyyy.padStart(4, '0')}-${mm.padStart(2, '0')}-${dd.padStart(2, '0')}`;
         }
       }
     }
