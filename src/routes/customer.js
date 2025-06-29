@@ -21,7 +21,6 @@ router.delete('/:id', customerController.delete);
 
 
 // Endpoint: /api/customers/migrate-birthday-column
-const pool = require('../models/db');
 router.post('/migrate-birthday-column', async (req, res) => {
   try {
     await pool.query("ALTER TABLE customers ADD COLUMN IF NOT EXISTS birthday DATE;");
