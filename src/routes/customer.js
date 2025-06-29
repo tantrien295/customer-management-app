@@ -16,7 +16,8 @@ router.post('/migrate-birthday-column', async (req, res) => {
     await pool.query("ALTER TABLE customers ADD COLUMN IF NOT EXISTS birthday DATE;");
     res.json({ success: true, message: 'Đã thêm cột birthday (nếu chưa có).' });
   } catch (err) {
-    res.status(500).json({ success: false, error: err.message });
+    // Trả về lỗi chi tiết để debug
+    res.status(500).json({ success: false, error: err.message, stack: err.stack });
   }
 });
 
