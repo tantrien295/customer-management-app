@@ -2,7 +2,14 @@ const ServiceHistory = require('../models/serviceHistory');
 
 const serviceHistoryController = {
   async getAll(req, res) {
-    const data = await ServiceHistory.getAll();
+    // Hỗ trợ lọc theo customerId nếu có
+    const { customerId } = req.query;
+    let data;
+    if (customerId) {
+      data = await ServiceHistory.getByCustomerId(customerId);
+    } else {
+      data = await ServiceHistory.getAll();
+    }
     res.json(data);
   },
   async getById(req, res) {

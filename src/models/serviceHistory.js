@@ -29,6 +29,11 @@ const ServiceHistory = {
     await pool.query('DELETE FROM service_histories WHERE id = $1', [id]);
     return true;
   },
+  // Lấy lịch sử theo customerId
+  async getByCustomerId(customerId) {
+    const res = await pool.query('SELECT * FROM service_histories WHERE customer_id = $1 ORDER BY id DESC', [customerId]);
+    return res.rows;
+  },
 };
 
 module.exports = ServiceHistory;
