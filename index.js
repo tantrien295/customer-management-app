@@ -28,9 +28,14 @@ app.use('/api/staff', staffRoutes);
 const serviceHistoryRoutes = require('./src/routes/serviceHistory');
 app.use('/api/service-histories', serviceHistoryRoutes);
 
+
 // Import and use routes for uploads
 const uploadRoutes = require('./src/routes/upload');
 app.use('/api/upload', uploadRoutes);
+
+// Import and use routes for settings
+const settingsRoutes = require('./src/routes/settings');
+app.use('/api/settings', settingsRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
