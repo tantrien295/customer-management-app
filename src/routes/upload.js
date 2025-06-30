@@ -4,7 +4,10 @@ const router = express.Router();
 
 // Sử dụng memory storage để chuẩn bị upload lên Cloudinary
 const storage = multer.memoryStorage();
-const upload = multer({ storage });
+const upload = multer({ 
+  storage,
+  limits: { fileSize: 10 * 1024 * 1024 } // 10MB mỗi file
+});
 
 // POST /api/upload - upload nhiều ảnh
 router.post('/', upload.array('images', 10), async (req, res) => {
